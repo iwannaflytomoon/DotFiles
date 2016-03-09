@@ -1,1 +1,5 @@
-# Let's Begin
+# DotFiles by iwannaflytomoon
+==================
+## Install
+      ./install.sh
+
