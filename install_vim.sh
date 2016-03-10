@@ -5,23 +5,28 @@ binary_error=""
 software_path="$HOME/.softwareCache/"
 url_prefix="ftp://ftp.vim.org/pub/vim/unix/"
 
+CYAN='\033[0;36m'
+BLUE='\033[0;34m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color]]]]'
+
 download() {
 	file_name=$(basename $1)
 	file_path="${software_path}${file_name}"
 	if [ ! -e $file_path ]; then
-		echo "Downloading vim ..."
+		echo "$BLUE Downloading vim ...$NC"
 		mkdir -p $software_path
 		cd $software_path
 		if which wget > /dev/null; then
-			wget $url
+			wget $1
 		elif which curl > /dev/null; then
-			curl -fL $url
+			curl -fL $1
 		else
-			echo "wget or curl not found..."
+			echo "$RED wget or curl not found...$NC"
 			return 1
 		fi
 	else
-		echo "vim install packages already exists..."
+		echo "$BLUE vim install packages already exists...$NC"
 	fi
 }
 
@@ -33,7 +38,9 @@ install_vim() {
 	cd ${vim_dir}
 
 	if [ 1 -eq $1 ]; then
-		awk 'BEGIN{print "#include <AvailabilityMacros.h>"}{print $0}' src/os_unix.h > src/os_unix.h
+        sed -i "" '1i\
+        #include <AvailabilityMacros.h>
+        ' src/os_unix.h
 	else
 		sudo yum install ncurses-devel zlib-devel openssl-devel sqlite-devel
 	fi
@@ -61,8 +68,8 @@ case "$archi" in
 	Linux\ x86_64) install_vim 0;;
 	Darwin\ x86_64) install_vim 1;;
 esac
-	echo "vim install success!"	
+	echo "$BLUE vim install success!$NC"
 else
-	echo "  - $binary_error !!!"
+	echo "$RED - $binary_error !!!$NC"
 	exit 1
 fi
