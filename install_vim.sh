@@ -10,6 +10,7 @@ download() {
 	file_path="${software_path}${file_name}"
 	if [ ! -e $file_path ]; then
 		echo "Downloading vim ..."
+		mkdir -p $software_path
 		cd $software_path
 		if which wget > /dev/null; then
 			wget $url
