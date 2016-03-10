@@ -14,7 +14,7 @@ download() {
 	file_name=$(basename $1)
 	file_path="${software_path}${file_name}"
 	if [ ! -e $file_path ]; then
-		echo "$BLUE Downloading vim ...$NC"
+		printf "$BLUE Downloading vim ...$NC\n"
 		mkdir -p $software_path
 		cd $software_path
 		if which wget > /dev/null; then
@@ -22,11 +22,11 @@ download() {
 		elif which curl > /dev/null; then
 			curl -fL $1
 		else
-			echo "$RED wget or curl not found...$NC"
+			printf "$RED wget or curl not found...$NC\n"
 			return 1
 		fi
 	else
-		echo "$BLUE vim install packages already exists...$NC"
+		printf "$BLUE vim install packages already exists...$NC\n"
 	fi
 }
 
@@ -68,8 +68,8 @@ case "$archi" in
 	Linux\ x86_64) install_vim 0;;
 	Darwin\ x86_64) install_vim 1;;
 esac
-	echo "$BLUE vim install success!$NC"
+	printf "$BLUE vim install success!$NC\n"
 else
-	echo "$RED - $binary_error !!!$NC"
+	printf "$RED - $binary_error !!!$NC\n"
 	exit 1
 fi
